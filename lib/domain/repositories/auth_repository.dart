@@ -1,23 +1,47 @@
-class AuthRepository {
-  Future<bool> login(String email, String password) async {
-    // Simulate a network request
-    if (email.isEmpty || password.isEmpty) {
-      return false;
-    }
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:papa_entulho/domain/models/user_model.dart';
+import 'package:papa_entulho/domain/repositories/database_repository.dart';
 
-    await Future.delayed(const Duration(seconds: 1));
-    return true;
+class AuthRepository extends DatabaseRepository {
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+
+  @override
+  String get ref => 'users';
+
+  Future<User?> login({required String email, required String password}) async {
+    try {
+      final userCredential = await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user == null) {
+        return null;
+      }
+
+      final user = UserModel(id: userCredential.user!.uid, name: 'teste', email: email);
+      saveData(user.toJson(), uuid: user.id);
+      return userCredential.user;
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<bool> logout() async {
-    // Simulate a network request
-    await Future.delayed(const Duration(seconds: 1));
-    return true;
+    try {
+      await _firebaseAuth.signOut();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
-  Future<bool> register(String email, String password) async {
-    // Simulate a network request
-    await Future.delayed(const Duration(seconds: 1));
-    return true;
+  Future<User?> register({required String email, required String password}) async {
+    try {
+      final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
+      print(userCredential.user);
+      return userCredential.user!;
+    } catch (e) {
+      print(e);
+      return null;
+    }
   }
+
+  bool get isLoggedIn => _firebaseAuth.currentUser != null;
 }

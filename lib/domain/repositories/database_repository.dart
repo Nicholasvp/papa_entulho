@@ -1,6 +1,23 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class DatabaseRepository {
-  Future<void> saveData(String data) async {
-    // Save data to database
+  final String ref = '';
+  final fireStore = FirebaseFirestore.instance;
+
+  Future<Map<String, dynamic>?> saveData(Map<String, dynamic> data, {String? uuid}) async {
+    try {
+      final collection = fireStore.collection(ref);
+      DocumentReference result;
+      if (uuid != null) {
+        result = collection.doc(uuid);
+        await result.set(data);
+      } else {
+        result = await collection.add(data);
+      }
+    } catch (e) {
+      print(e);
+    }
+    return null;
   }
 
   Future<Map<String, dynamic>> getData() async {

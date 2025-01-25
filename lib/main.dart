@@ -4,6 +4,7 @@ import 'package:papa_entulho/domain/app/my_app.dart';
 import 'package:papa_entulho/firebase_options.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
