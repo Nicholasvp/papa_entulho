@@ -35,10 +35,8 @@ class AuthRepository extends DatabaseRepository {
   Future<User?> register({required String email, required String password}) async {
     try {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
-      print(userCredential.user);
       return userCredential.user!;
     } catch (e) {
-      print(e);
       return null;
     }
   }

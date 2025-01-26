@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papa_entulho/ui/home/page/home_page.dart';
+import 'package:papa_entulho/domain/bindings/app_binding.dart';
+import 'package:papa_entulho/domain/routes/app_pages.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -9,10 +10,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Papa Entulho',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const HomePage(),
+      theme: Get.theme,
+      initialBinding: AppBinding(),
+      getPages: AppPages.pages,
     );
   }
 }
