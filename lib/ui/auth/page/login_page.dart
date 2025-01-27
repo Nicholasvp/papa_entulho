@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
-import 'package:papa_entulho/ui/home/auth/controller/login_controller.dart';
+import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
+import 'package:papa_entulho/ui/auth/controller/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
   const LoginPage({super.key});
@@ -38,17 +39,20 @@ class LoginPage extends GetView<LoginController> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 controller.obx(
-                  (state) => ElevatedButton(
-                    onPressed: controller.login,
-                    child: const Text('Login'),
+                  (state) => AppButtonPrimary(
+                    onTap: controller.login,
+                    labelText: 'Entrar',
                   ),
-                  onLoading: const CircularProgressIndicator(),
+                  onLoading: const AppButtonPrimary(
+                    isLoading: true,
+                    labelText: 'Entrar',
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {
+                AppButtonPrimary(
+                  onTap: () {
                     Get.toNamed(Routes.REGISTER);
                   },
-                  child: const Text('Cadastro'),
+                  labelText: 'Cadastro',
                 ),
               ],
             ),

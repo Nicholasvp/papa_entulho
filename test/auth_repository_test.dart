@@ -33,7 +33,12 @@ void main() {
     });
 
     test('should return true when register is successful', () async {
-      final result = await authRepository.register(email: 'teste@email.com', password: '12345678');
+      final result = await authRepository.register(
+        email: 'teste@email.com',
+        password: '12345678',
+        name: 'Teste',
+        phone: '123456789',
+      );
       expect(result, true);
     });
   });
