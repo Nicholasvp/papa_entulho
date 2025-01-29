@@ -8,7 +8,7 @@ part of 'papa_entulho_model.dart';
 
 PapaEntulhoModel _$PapaEntulhoModelFromJson(Map<String, dynamic> json) =>
     PapaEntulhoModel(
-      id: json['id'] as String,
+      id: json['id'] as String?,
       description: json['description'] as String?,
       address: json['address'] as String,
       phone: json['phone'] as String,

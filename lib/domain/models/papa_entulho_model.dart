@@ -4,7 +4,7 @@ part 'papa_entulho_model.g.dart';
 
 @JsonSerializable()
 class PapaEntulhoModel {
-  final String id;
+  final String? id;
   final String? description;
   final String address;
   final String phone;
@@ -15,7 +15,7 @@ class PapaEntulhoModel {
   factory PapaEntulhoModel.fromJson(Map<String, dynamic> json) => _$PapaEntulhoModelFromJson(json);
 
   PapaEntulhoModel(
-      {required this.id,
+      {this.id,
       required this.description,
       required this.address,
       required this.phone,

@@ -31,7 +31,9 @@ class AppButtonPrimary extends StatelessWidget {
               ? const CircularProgressIndicator()
               : Text(
                   labelText,
-                  style: TextStyle(color: textColor ?? Colors.white),
+                  style: TextStyle(
+                    color: textColor ?? Colors.white,
+                  ),
                 ),
         ),
       ),
