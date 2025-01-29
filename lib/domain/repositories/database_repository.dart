@@ -13,6 +13,7 @@ class DatabaseRepository {
         await result.set(data);
       } else {
         result = await collection.add(data);
+        await result.update({'id': result.id});
       }
     } catch (e) {
       return {};
@@ -20,9 +21,9 @@ class DatabaseRepository {
     return {};
   }
 
-  Future<List<Map<String, dynamic>>> getCollection({required String collection}) async {
+  Future<List<Map<String, dynamic>>> getCollection() async {
     try {
-      final result = await fireStore.collection(collection).get();
+      final result = await fireStore.collection(ref).get();
       return result.docs.map((e) => e.data()).toList();
     } catch (e) {
       return [];

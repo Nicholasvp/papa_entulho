@@ -18,4 +18,9 @@ class PapaEntulhoRepository extends DatabaseRepository {
     final response = await saveData(papaEntulhoModel.toJson());
     return PapaEntulhoModel.fromJson(response);
   }
+
+  Future<List<PapaEntulhoModel>> getPapaEntulhos() async {
+    final response = await getCollection();
+    return response.map((e) => PapaEntulhoModel.fromJson(e)).toList();
+  }
 }

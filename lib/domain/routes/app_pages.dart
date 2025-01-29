@@ -9,12 +9,13 @@ import 'package:papa_entulho/domain/routes/routes.dart';
 import 'package:papa_entulho/ui/auth/page/login_page.dart';
 import 'package:papa_entulho/ui/auth/page/register_page.dart';
 import 'package:papa_entulho/ui/home/pages/home_page.dart';
+import 'package:papa_entulho/ui/papa_entulho/page/papa_entulho_form.dart';
 
 class AppPages {
   static final pages = [
     //home
     GetPage(
-      name: Routes.HOME,
+      name: Paths.HOME,
       middlewares: [
         AuthMiddleware(),
       ],
@@ -24,16 +25,25 @@ class AppPages {
         PerfilBinding(),
       ],
       page: () => const HomePage(),
+      children: [
+        GetPage(
+          name: Paths.PAPA_ENTULHO_FORM,
+          bindings: [
+            PapaEntulhoBinding(),
+          ],
+          page: () => const PapaEntulhoForm(),
+        ),
+      ],
     ),
     //login
     GetPage(
-      name: Routes.LOGIN,
+      name: Paths.LOGIN,
       binding: LoginBinding(),
       page: () => const LoginPage(),
     ),
     //register
     GetPage(
-      name: Routes.REGISTER,
+      name: Paths.REGISTER,
       binding: RegisterBinding(),
       page: () => const RegisterPage(),
     ),

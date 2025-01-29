@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papa_entulho/domain/models/export_models.dart';
+import 'package:papa_entulho/domain/models/papa_entulho_model.dart';
 import 'package:papa_entulho/domain/repositories/papa_entulho_repository.dart';
 
-class PapaEntulhoController extends GetxController with StateMixin<PapaEntulhoModel> {
+class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntulhoModel>> {
   final _papaEntulhoRepository = Get.find<PapaEntulhoRepository>();
 
   final formKey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
   final descriptionController = TextEditingController();
   final addressController = TextEditingController();
   final phoneController = TextEditingController();
   final dateInitialController = TextEditingController();
   final dateFinalController = TextEditingController();
   final quantityController = TextEditingController();
+
+  @override
+  void onReady() {
+    getPapaEntulhos();
+    super.onReady();
+  }
 
   void createPapaEntulho() async {
     final description = descriptionController.text;
@@ -27,6 +32,16 @@ class PapaEntulhoController extends GetxController with StateMixin<PapaEntulhoMo
     try {
       final response =
           await _papaEntulhoRepository.createPapaEntulho(description, address, phone, dateInitial, dateFinal, quantity);
+      change([response], status: RxStatus.success());
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
+  }
+
+  void getPapaEntulhos() async {
+    change(null, status: RxStatus.loading());
+    try {
+      final response = await _papaEntulhoRepository.getPapaEntulhos();
       change(response, status: RxStatus.success());
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));

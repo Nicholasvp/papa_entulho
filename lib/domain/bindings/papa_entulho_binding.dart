@@ -5,7 +5,13 @@ import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.
 class PapaEntulhoBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => PapaEntulhoController());
-    Get.lazyPut(() => PapaEntulhoRepository());
+    Get.lazyPut(
+      () => PapaEntulhoController(),
+      fenix: true,
+    );
+    Get.lazyPut(
+      () => PapaEntulhoRepository(),
+      fenix: true,
+    );
   }
 }

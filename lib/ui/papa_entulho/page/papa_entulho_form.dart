@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:papa_entulho/domain/widgets/app_text_field.dart';
 import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
 
 class PapaEntulhoForm extends StatelessWidget {
@@ -18,26 +19,62 @@ class PapaEntulhoForm extends StatelessWidget {
           key: controller.formKey,
           child: Column(
             children: [
-              TextFormField(
-                controller: controller.nameController,
-                decoration: const InputDecoration(labelText: 'Nome'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira o nome';
-                  }
-                  return null;
-                },
+              AppTextField(labelText: 'Descrição', controller: controller.descriptionController),
+              const SizedBox(height: 10),
+              AppTextField(labelText: 'Endereço', controller: controller.addressController),
+              const SizedBox(height: 10),
+              AppTextField(labelText: 'Telefone', controller: controller.phoneController),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDate != null) {
+                          controller.dateInitialController.text = pickedDate.toString().split(' ')[0];
+                        }
+                      },
+                      child: AbsorbPointer(
+                        child: AppTextField(
+                          labelText: 'Data Inicial',
+                          controller: controller.dateInitialController,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime(2000),
+                          lastDate: DateTime(2101),
+                        );
+                        if (pickedDate != null) {
+                          controller.dateFinalController.text = pickedDate.toString().split(' ')[0];
+                        }
+                      },
+                      child: AbsorbPointer(
+                        child: AppTextField(
+                          labelText: 'Data Final',
+                          controller: controller.dateFinalController,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              TextFormField(
-                controller: controller.descriptionController,
-                decoration: const InputDecoration(labelText: 'Descrição'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Por favor, insira a descrição';
-                  }
-                  return null;
-                },
-              ),
+              const SizedBox(height: 10),
+              AppTextField(labelText: 'Quantidade', controller: controller.quantityController),
+              const SizedBox(height: 10),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
