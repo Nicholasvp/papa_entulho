@@ -20,13 +20,11 @@ class LoginController extends GetxController with StateMixin {
 
   void login() async {
     change(null, status: RxStatus.loading());
-    await _authRepository.login(email: email, password: password).then((value) {
-      Get.offAllNamed(Routes.HOME);
-      change(null, status: RxStatus.success());
-    }).catchError((error) {
-      change(null, status: RxStatus.error(error.toString()));
-    });
 
+    final user = await _authRepository.login(email: email, password: password);
+    if (user != null) {
+      Get.offAllNamed(Routes.HOME);
+    }
     change(null, status: RxStatus.success());
   }
 }

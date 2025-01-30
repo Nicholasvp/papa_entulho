@@ -8,6 +8,7 @@ class AppButtonPrimary extends StatelessWidget {
     this.backgroundColor,
     this.onTap,
     this.isLoading = false,
+    this.expanded = false,
   });
 
   final String labelText;
@@ -15,12 +16,14 @@ class AppButtonPrimary extends StatelessWidget {
   final Color? backgroundColor;
   final Function()? onTap;
   final bool isLoading;
+  final bool expanded;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: expanded ? double.infinity : null,
         padding: const EdgeInsets.all(16.0),
         decoration: BoxDecoration(
           color: backgroundColor ?? Colors.blue,
@@ -28,7 +31,7 @@ class AppButtonPrimary extends StatelessWidget {
         ),
         child: Center(
           child: isLoading
-              ? const CircularProgressIndicator()
+              ? const CircularProgressIndicator.adaptive()
               : Text(
                   labelText,
                   style: TextStyle(

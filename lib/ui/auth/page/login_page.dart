@@ -13,50 +13,44 @@ class LoginPage extends GetView<LoginController> {
       appBar: AppBar(
         title: const Text(''),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              decoration: const InputDecoration(
-                labelText: 'Email',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.emailController,
-            ),
-            const SizedBox(height: 16),
-            TextField(
-              obscureText: true,
-              decoration: const InputDecoration(
-                labelText: 'Senha',
-                border: OutlineInputBorder(),
-              ),
-              controller: controller.passwordController,
-            ),
-            const SizedBox(height: 16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                controller.obx(
-                  (state) => AppButtonPrimary(
-                    onTap: controller.login,
-                    labelText: 'Entrar',
-                  ),
-                  onLoading: const AppButtonPrimary(
-                    isLoading: true,
-                    labelText: 'Entrar',
-                  ),
+      body: Center(
+        child: Container(
+          width: (Get.width * 0.5) + 100,
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextField(
+                decoration: const InputDecoration(
+                  labelText: 'Email',
+                  border: OutlineInputBorder(),
                 ),
-                AppButtonPrimary(
-                  onTap: () {
-                    Get.toNamed(Routes.REGISTER);
-                  },
-                  labelText: 'Cadastro',
+                controller: controller.emailController,
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                obscureText: true,
+                decoration: const InputDecoration(
+                  labelText: 'Senha',
+                  border: OutlineInputBorder(),
                 ),
-              ],
-            ),
-          ],
+                controller: controller.passwordController,
+              ),
+              const SizedBox(height: 16),
+              controller.obx(
+                (state) => AppButtonPrimary(
+                  onTap: controller.login,
+                  labelText: 'Entrar',
+                  expanded: true,
+                ),
+                onLoading: const AppButtonPrimary(
+                  isLoading: true,
+                  labelText: 'Entrar',
+                  expanded: true,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

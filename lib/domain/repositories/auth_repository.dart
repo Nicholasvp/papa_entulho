@@ -23,6 +23,7 @@ class AuthRepository extends DatabaseRepository {
 
       return userCredential.user;
     } catch (e) {
+      Get.snackbar('Erro', e.toString());
       return null;
     }
   }
