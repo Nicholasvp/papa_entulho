@@ -4,7 +4,7 @@ class DatabaseRepository {
   final String ref = '';
   final fireStore = FirebaseFirestore.instance;
 
-  Future<Map<String, dynamic>> saveData(Map<String, dynamic> data, {String? uuid}) async {
+  Future<Map<String, dynamic>> createData(Map<String, dynamic> data, {String? uuid}) async {
     try {
       final collection = fireStore.collection(ref);
       DocumentReference result;
@@ -14,6 +14,7 @@ class DatabaseRepository {
       } else {
         result = await collection.add(data);
         await result.update({'id': result.id});
+        return getData(collection: ref, id: result.id);
       }
     } catch (e) {
       return {};
@@ -39,11 +40,19 @@ class DatabaseRepository {
     }
   }
 
-  Future<void> deleteData() async {
-    // Delete data from database
+  Future<void> deleteData({required String id}) async {
+    try {
+      await fireStore.collection(ref).doc(id).delete();
+    } catch (e) {
+      return;
+    }
   }
 
-  Future<void> updateData(String data) async {
-    // Update data in database
+  Future<void> updateData({required String id, required Map<String, dynamic> data}) async {
+    try {
+      await fireStore.collection(ref).doc(id).update(data);
+    } catch (e) {
+      return;
+    }
   }
 }

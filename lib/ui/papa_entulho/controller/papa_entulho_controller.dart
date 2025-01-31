@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/models/papa_entulho_model.dart';
 import 'package:papa_entulho/domain/repositories/papa_entulho_repository.dart';
+import 'package:papa_entulho/domain/routes/routes.dart';
 
 class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntulhoModel>> {
   final _papaEntulhoRepository = Get.find<PapaEntulhoRepository>();
@@ -30,9 +31,10 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
 
     change(null, status: RxStatus.loading());
     try {
-      final response =
-          await _papaEntulhoRepository.createPapaEntulho(description, address, phone, dateInitial, dateFinal, quantity);
-      change([response], status: RxStatus.success());
+      await _papaEntulhoRepository.createPapaEntulho(description, address, phone, dateInitial, dateFinal, quantity);
+      getPapaEntulhos();
+      Get.offAndToNamed(Routes.HOME);
+      Get.snackbar('Sucesso', 'Papa Entulho criado com sucesso');
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
     }

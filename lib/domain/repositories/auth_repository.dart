@@ -43,7 +43,7 @@ class AuthRepository extends DatabaseRepository {
       final userCredential = await _firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
 
       final user = UserModel(id: userCredential.user!.uid, name: name, email: email, phone: phone);
-      await saveData(user.toJson(), uuid: user.id);
+      await createData(user.toJson(), uuid: user.id);
       await _getUser();
 
       return userCredential.user!;

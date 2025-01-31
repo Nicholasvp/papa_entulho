@@ -15,12 +15,16 @@ class PapaEntulhoRepository extends DatabaseRepository {
         dateFinal: dateFinal,
         quantity: quantity);
 
-    final response = await saveData(papaEntulhoModel.toJson());
+    final response = await createData(papaEntulhoModel.toJson());
     return PapaEntulhoModel.fromJson(response);
   }
 
   Future<List<PapaEntulhoModel>> getPapaEntulhos() async {
     final response = await getCollection();
     return response.map((e) => PapaEntulhoModel.fromJson(e)).toList();
+  }
+
+  Future<void> deletePapaEntulho(String id) async {
+    await deleteData(id: id);
   }
 }
