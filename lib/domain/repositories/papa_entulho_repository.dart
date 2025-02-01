@@ -27,4 +27,8 @@ class PapaEntulhoRepository extends DatabaseRepository {
   Future<void> deletePapaEntulho(String id) async {
     await deleteData(id: id);
   }
+
+  Future<void> updatePapaEntulho(String id, PapaEntulhoModel papaEntulhoModel) async {
+    await updateData(id: id, data: papaEntulhoModel.toJson());
+  }
 }

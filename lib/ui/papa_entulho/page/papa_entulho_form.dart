@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:papa_entulho/domain/routes/routes.dart';
+import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
 import 'package:papa_entulho/domain/widgets/app_text_field.dart';
 import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
 
@@ -9,8 +11,16 @@ class PapaEntulhoForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<PapaEntulhoController>();
+    if (Get.arguments != null) {
+      controller.fillForm();
+    }
+
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Get.offNamed(Routes.HOME),
+        ),
         title: const Text('Criar Papa Entulho'),
       ),
       body: Padding(
@@ -76,13 +86,19 @@ class PapaEntulhoForm extends StatelessWidget {
               AppTextField(labelText: 'Quantidade', controller: controller.quantityController),
               const SizedBox(height: 10),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (controller.formKey.currentState!.validate()) {
-                    controller.createPapaEntulho();
-                  }
-                },
-                child: const Text('Criar'),
+              controller.obx(
+                (state) => AppButtonPrimary(
+                  onTap: () {
+                    if (controller.formKey.currentState!.validate()) {
+                      if (Get.arguments == null) {
+                        controller.createPapaEntulho();
+                      } else {
+                        controller.updatePapaEntulho(Get.arguments.id);
+                      }
+                    }
+                  },
+                  labelText: Get.arguments == null ? 'Criar' : 'Atualizar',
+                ),
               ),
             ],
           ),

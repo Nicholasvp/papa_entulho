@@ -17,14 +17,30 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
                 itemCount: state?.length,
                 itemBuilder: (context, index) {
                   final item = state![index];
-                  return ListTile(
-                    title: Text(item.description ?? ''),
-                    subtitle: Text(item.address),
-                    trailing: IconButton(
-                      icon: const Icon(Icons.delete),
-                      onPressed: () {
-                        // controller.deletePapaEntulho(item.id);
-                      },
+                  return InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.PAPA_ENTULHO_FORM, arguments: item);
+                    },
+                    child: ListTile(
+                      title: Text(item.description ?? ''),
+                      subtitle: Text(item.address),
+                      trailing: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.edit),
+                            onPressed: () {
+                              Get.toNamed(Routes.PAPA_ENTULHO_FORM, arguments: item);
+                            },
+                          ),
+                          IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              controller.deletePapaEntulho(item.id!);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -32,7 +48,10 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
             ),
           ),
           TextButton(
-            onPressed: () => Get.toNamed(Routes.PAPA_ENTULHO_FORM),
+            onPressed: () {
+              controller.clearForm();
+              Get.toNamed(Routes.PAPA_ENTULHO_FORM);
+            },
             child: const Text('Cadastrar Papa Entulho'),
           ),
           const SizedBox(height: 100),
