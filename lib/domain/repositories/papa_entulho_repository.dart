@@ -5,16 +5,7 @@ class PapaEntulhoRepository extends DatabaseRepository {
   @override
   String get ref => 'papa_entulhos';
 
-  Future<PapaEntulhoModel> createPapaEntulho(
-      String description, String address, String phone, DateTime dateInitial, DateTime dateFinal, int quantity) async {
-    final papaEntulhoModel = PapaEntulhoModel(
-        description: description,
-        address: address,
-        phone: phone,
-        dateInitial: dateInitial,
-        dateFinal: dateFinal,
-        quantity: quantity);
-
+  Future<PapaEntulhoModel> createPapaEntulho(PapaEntulhoModel papaEntulhoModel) async {
     final response = await createData(papaEntulhoModel.toJson());
     return PapaEntulhoModel.fromJson(response);
   }

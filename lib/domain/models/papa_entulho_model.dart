@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:papa_entulho/domain/enums/enums.dart';
 
 part 'papa_entulho_model.g.dart';
 
@@ -11,6 +12,7 @@ class PapaEntulhoModel {
   final DateTime dateInitial;
   final DateTime dateFinal;
   final int quantity;
+  final Status status;
 
   factory PapaEntulhoModel.fromJson(Map<String, dynamic> json) => _$PapaEntulhoModelFromJson(json);
 
@@ -21,7 +23,8 @@ class PapaEntulhoModel {
       required this.phone,
       required this.dateInitial,
       required this.dateFinal,
-      required this.quantity});
+      required this.quantity,
+      required this.status});
 
   Map<String, dynamic> toJson() => _$PapaEntulhoModelToJson(this);
 }

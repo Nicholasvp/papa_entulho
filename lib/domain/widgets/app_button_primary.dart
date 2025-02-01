@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AppButtonPrimary extends StatelessWidget {
   const AppButtonPrimary({
@@ -9,6 +10,7 @@ class AppButtonPrimary extends StatelessWidget {
     this.onTap,
     this.isLoading = false,
     this.expanded = false,
+    this.margin = 8.0,
   });
 
   final String labelText;
@@ -17,6 +19,7 @@ class AppButtonPrimary extends StatelessWidget {
   final Function()? onTap;
   final bool isLoading;
   final bool expanded;
+  final double margin;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +28,7 @@ class AppButtonPrimary extends StatelessWidget {
       child: Container(
         width: expanded ? double.infinity : null,
         padding: const EdgeInsets.all(16.0),
+        margin: EdgeInsets.symmetric(horizontal: margin),
         decoration: BoxDecoration(
           color: backgroundColor ?? Colors.blue,
           borderRadius: BorderRadius.circular(8.0),

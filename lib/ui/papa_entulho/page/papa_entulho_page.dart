@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
+import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
 import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
 
 class PapaEntulhoPage extends GetView<PapaEntulhoController> {
@@ -47,12 +48,13 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
               ),
             ),
           ),
-          TextButton(
-            onPressed: () {
+          AppButtonPrimary(
+            onTap: () {
               controller.clearForm();
               Get.toNamed(Routes.PAPA_ENTULHO_FORM);
             },
-            child: const Text('Cadastrar Papa Entulho'),
+            labelText: 'Cadastrar Papa Entulho',
+            margin: 32,
           ),
           const SizedBox(height: 100),
         ],

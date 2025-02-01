@@ -1,4 +1,6 @@
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
 import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
@@ -29,11 +31,30 @@ class PapaEntulhoForm extends StatelessWidget {
           key: controller.formKey,
           child: Column(
             children: [
-              AppTextField(labelText: 'Descrição', controller: controller.descriptionController),
+              AppTextField(
+                labelText: 'Descrição',
+                controller: controller.descriptionController,
+                required: true,
+                icon: Icons.description,
+              ),
               const SizedBox(height: 10),
-              AppTextField(labelText: 'Endereço', controller: controller.addressController),
+              AppTextField(
+                labelText: 'Endereço do cliente',
+                controller: controller.addressController,
+                required: true,
+                icon: Icons.location_on,
+              ),
               const SizedBox(height: 10),
-              AppTextField(labelText: 'Telefone', controller: controller.phoneController),
+              AppTextField(
+                labelText: 'Telefone do cliente',
+                controller: controller.phoneController,
+                required: true,
+                icon: Icons.phone,
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                  TelefoneInputFormatter(),
+                ],
+              ),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -54,6 +75,7 @@ class PapaEntulhoForm extends StatelessWidget {
                         child: AppTextField(
                           labelText: 'Data Inicial',
                           controller: controller.dateInitialController,
+                          icon: Icons.calendar_today,
                         ),
                       ),
                     ),
@@ -76,6 +98,7 @@ class PapaEntulhoForm extends StatelessWidget {
                         child: AppTextField(
                           labelText: 'Data Final',
                           controller: controller.dateFinalController,
+                          icon: Icons.calendar_today,
                         ),
                       ),
                     ),
@@ -83,7 +106,13 @@ class PapaEntulhoForm extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              AppTextField(labelText: 'Quantidade', controller: controller.quantityController),
+              AppTextField(
+                labelText: 'Quantidade',
+                controller: controller.quantityController,
+                required: true,
+                numeric: true,
+                icon: Icons.format_list_numbered,
+              ),
               const SizedBox(height: 10),
               const SizedBox(height: 20),
               controller.obx(

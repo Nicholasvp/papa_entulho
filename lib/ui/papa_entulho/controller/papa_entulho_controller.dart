@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:papa_entulho/domain/enums/enums.dart';
 import 'package:papa_entulho/domain/models/papa_entulho_model.dart';
 import 'package:papa_entulho/domain/repositories/papa_entulho_repository.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
@@ -14,6 +15,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
   final dateInitialController = TextEditingController();
   final dateFinalController = TextEditingController();
   final quantityController = TextEditingController();
+  final statusController = TextEditingController();
 
   @override
   void onReady() {
@@ -21,17 +23,21 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
     super.onReady();
   }
 
-  void createPapaEntulho() async {
-    final description = descriptionController.text;
-    final address = addressController.text;
-    final phone = phoneController.text;
-    final dateInitial = DateTime.parse(dateInitialController.text);
-    final dateFinal = DateTime.parse(dateFinalController.text);
-    final quantity = int.parse(quantityController.text);
+  PapaEntulhoModel get papaEntulhoModelMounted => PapaEntulhoModel(
+        id: Get.arguments?.id,
+        description: descriptionController.text,
+        address: addressController.text,
+        phone: phoneController.text,
+        dateInitial: DateTime.parse(dateInitialController.text),
+        dateFinal: DateTime.parse(dateFinalController.text),
+        quantity: int.parse(quantityController.text),
+        status: statusMap[statusController.text] ?? Status.disponivel,
+      );
 
+  void createPapaEntulho() async {
     change(null, status: RxStatus.loading());
     try {
-      await _papaEntulhoRepository.createPapaEntulho(description, address, phone, dateInitial, dateFinal, quantity);
+      await _papaEntulhoRepository.createPapaEntulho(papaEntulhoModelMounted);
       getPapaEntulhos();
       Get.offAndToNamed(Routes.HOME);
       Get.snackbar('Sucesso', 'Papa Entulho criado com sucesso');
@@ -40,7 +46,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
     }
   }
 
-  void getPapaEntulhos() async {
+  Future<void> getPapaEntulhos() async {
     change(null, status: RxStatus.loading());
     try {
       final response = await _papaEntulhoRepository.getPapaEntulhos();
@@ -57,7 +63,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
     change(null, status: RxStatus.loading());
     try {
       await _papaEntulhoRepository.deletePapaEntulho(id);
-      getPapaEntulhos();
+      await getPapaEntulhos();
       Get.snackbar('Sucesso', 'Papa Entulho deletado com sucesso');
     } catch (e) {
       change(null, status: RxStatus.error(e.toString()));
@@ -65,25 +71,9 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
   }
 
   void updatePapaEntulho(String id) async {
-    final description = descriptionController.text;
-    final address = addressController.text;
-    final phone = phoneController.text;
-    final dateInitial = DateTime.parse(dateInitialController.text);
-    final dateFinal = DateTime.parse(dateFinalController.text);
-    final quantity = int.parse(quantityController.text);
-
     change(null, status: RxStatus.loading());
     try {
-      PapaEntulhoModel papaEntulhoModel = PapaEntulhoModel(
-        id: id,
-        description: description,
-        address: address,
-        phone: phone,
-        dateInitial: dateInitial,
-        dateFinal: dateFinal,
-        quantity: quantity,
-      );
-      await _papaEntulhoRepository.updatePapaEntulho(id, papaEntulhoModel);
+      await _papaEntulhoRepository.updatePapaEntulho(id, papaEntulhoModelMounted);
       getPapaEntulhos();
       Get.offAndToNamed(Routes.HOME);
       Get.snackbar('Sucesso', 'Papa Entulho atualizado com sucesso');
