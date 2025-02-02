@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
 import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
+import 'package:papa_entulho/domain/widgets/papa_entulho_card.dart';
 import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
 
 class PapaEntulhoPage extends GetView<PapaEntulhoController> {
@@ -18,34 +19,28 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
                 itemCount: state?.length,
                 itemBuilder: (context, index) {
                   final item = state![index];
-                  return InkWell(
-                    onTap: () {
+                  return PapaEntulhoCard(
+                    papaEntulho: item,
+                    onEdit: () {
                       Get.toNamed(Routes.PAPA_ENTULHO_FORM, arguments: item);
                     },
-                    child: ListTile(
-                      title: Text(item.description ?? ''),
-                      subtitle: Text(item.address),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.edit),
-                            onPressed: () {
-                              Get.toNamed(Routes.PAPA_ENTULHO_FORM, arguments: item);
-                            },
-                          ),
-                          IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () {
-                              controller.deletePapaEntulho(item.id!);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
+                    onDelete: () {
+                      controller.deletePapaEntulho(item.id!);
+                    },
                   );
                 },
               ),
+            ),
+            onLoading: const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Center(child: CircularProgressIndicator()),
+            ),
+            onEmpty: const Column(
+              children: [
+                SizedBox(height: 100),
+                Text('Nenhum papa entulho cadastrado'),
+                SizedBox(height: 100),
+              ],
             ),
           ),
           AppButtonPrimary(

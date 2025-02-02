@@ -6,7 +6,7 @@ part 'papa_entulho_model.g.dart';
 @JsonSerializable()
 class PapaEntulhoModel {
   final String? id;
-  final String? description;
+  final String description;
   final String address;
   final String phone;
   final DateTime dateInitial;

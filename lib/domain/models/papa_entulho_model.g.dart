@@ -6,10 +6,9 @@ part of 'papa_entulho_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-PapaEntulhoModel _$PapaEntulhoModelFromJson(Map<String, dynamic> json) =>
-    PapaEntulhoModel(
+PapaEntulhoModel _$PapaEntulhoModelFromJson(Map<String, dynamic> json) => PapaEntulhoModel(
       id: json['id'] as String?,
-      description: json['description'] as String?,
+      description: json['description'] as String,
       address: json['address'] as String,
       phone: json['phone'] as String,
       dateInitial: DateTime.parse(json['dateInitial'] as String),
@@ -18,8 +17,7 @@ PapaEntulhoModel _$PapaEntulhoModelFromJson(Map<String, dynamic> json) =>
       status: $enumDecode(_$StatusEnumMap, json['status']),
     );
 
-Map<String, dynamic> _$PapaEntulhoModelToJson(PapaEntulhoModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$PapaEntulhoModelToJson(PapaEntulhoModel instance) => <String, dynamic>{
       'id': instance.id,
       'description': instance.description,
       'address': instance.address,

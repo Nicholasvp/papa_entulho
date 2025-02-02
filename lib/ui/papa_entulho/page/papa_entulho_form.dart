@@ -1,22 +1,41 @@
-import 'package:brasil_fields/brasil_fields.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
 import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
 import 'package:papa_entulho/domain/widgets/app_text_field.dart';
 import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
 
-class PapaEntulhoForm extends StatelessWidget {
+class PapaEntulhoForm extends StatefulWidget {
   const PapaEntulhoForm({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final controller = Get.find<PapaEntulhoController>();
+  State<PapaEntulhoForm> createState() => _PapaEntulhoFormState();
+}
+
+class _PapaEntulhoFormState extends State<PapaEntulhoForm> {
+  final controller = Get.find<PapaEntulhoController>();
+  final TextEditingController dateRangeController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
     if (Get.arguments != null) {
       controller.fillForm();
+      _updateDateRangeField();
     }
+  }
 
+  void _updateDateRangeField() {
+    if (controller.dateInitialController.text.isNotEmpty && controller.dateFinalController.text.isNotEmpty) {
+      dateRangeController.text = "${controller.dateInitialController.text} - ${controller.dateFinalController.text}";
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -56,55 +75,41 @@ class PapaEntulhoForm extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2101),
-                        );
-                        if (pickedDate != null) {
-                          controller.dateInitialController.text = pickedDate.toString().split(' ')[0];
-                        }
-                      },
-                      child: AbsorbPointer(
-                        child: AppTextField(
-                          labelText: 'Data Inicial',
-                          controller: controller.dateInitialController,
-                          icon: Icons.calendar_today,
-                        ),
-                      ),
-                    ),
+
+              // Date Range Picker
+              GestureDetector(
+                onTap: () async {
+                  DateTimeRange? pickedRange = await showDateRangePicker(
+                    context: context,
+                    firstDate: DateTime(2000),
+                    lastDate: DateTime(2101),
+                    initialDateRange:
+                        (controller.dateInitialController.text.isNotEmpty && controller.dateFinalController.text.isNotEmpty)
+                            ? DateTimeRange(
+                                start: DateTime.parse(controller.dateInitialController.text),
+                                end: DateTime.parse(controller.dateFinalController.text),
+                              )
+                            : null,
+                  );
+
+                  if (pickedRange != null) {
+                    setState(() {
+                      controller.dateInitialController.text = DateFormat('dd/MM/yy').format(pickedRange.start);
+                      controller.dateFinalController.text = DateFormat('dd/MM/yy').format(pickedRange.end);
+                      _updateDateRangeField();
+                    });
+                  }
+                },
+                child: AbsorbPointer(
+                  child: AppTextField(
+                    labelText: 'Período (Data Inicial - Data Final)',
+                    controller: dateRangeController,
+                    icon: Icons.date_range,
+                    required: true,
                   ),
-                  const SizedBox(width: 10),
-                  Expanded(
-                    child: GestureDetector(
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(2000),
-                          lastDate: DateTime(2101),
-                        );
-                        if (pickedDate != null) {
-                          controller.dateFinalController.text = pickedDate.toString().split(' ')[0];
-                        }
-                      },
-                      child: AbsorbPointer(
-                        child: AppTextField(
-                          labelText: 'Data Final',
-                          controller: controller.dateFinalController,
-                          icon: Icons.calendar_today,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
+
               const SizedBox(height: 10),
               AppTextField(
                 labelText: 'Quantidade',
@@ -113,21 +118,24 @@ class PapaEntulhoForm extends StatelessWidget {
                 numeric: true,
                 icon: Icons.format_list_numbered,
               ),
-              const SizedBox(height: 10),
               const SizedBox(height: 20),
-              controller.obx(
-                (state) => AppButtonPrimary(
-                  onTap: () {
-                    if (controller.formKey.currentState!.validate()) {
-                      if (Get.arguments == null) {
-                        controller.createPapaEntulho();
-                      } else {
-                        controller.updatePapaEntulho(Get.arguments.id);
+              GetBuilder<PapaEntulhoController>(
+                init: PapaEntulhoController(),
+                builder: (_) {
+                  return AppButtonPrimary(
+                    onTap: () {
+                      if (controller.formKey.currentState!.validate()) {
+                        if (Get.arguments == null) {
+                          controller.createPapaEntulho();
+                        } else {
+                          controller.updatePapaEntulho(Get.arguments.id);
+                        }
                       }
-                    }
-                  },
-                  labelText: Get.arguments == null ? 'Criar' : 'Atualizar',
-                ),
+                    },
+                    isLoading: controller.status.isLoading,
+                    labelText: Get.arguments == null ? 'Criar' : 'Atualizar',
+                  );
+                },
               ),
             ],
           ),

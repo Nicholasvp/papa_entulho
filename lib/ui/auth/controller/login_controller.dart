@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/repositories/auth_repository.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
@@ -15,6 +16,9 @@ class LoginController extends GetxController with StateMixin {
   @override
   void onInit() {
     super.onInit();
+    Future.delayed(const Duration(milliseconds: 500), () {
+      TextInput.finishAutofillContext();
+    });
     change(null, status: RxStatus.success());
   }
 
