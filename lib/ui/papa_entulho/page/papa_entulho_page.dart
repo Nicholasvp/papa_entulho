@@ -13,9 +13,10 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
     return Center(
       child: Column(
         children: [
-          controller.obx(
-            (state) => Expanded(
-              child: ListView.builder(
+          Expanded(
+            flex: 3,
+            child: controller.obx(
+              (state) => ListView.builder(
                 itemCount: state?.length,
                 itemBuilder: (context, index) {
                   final item = state![index];
@@ -30,28 +31,47 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
                   );
                 },
               ),
-            ),
-            onLoading: const Padding(
-              padding: EdgeInsets.all(8.0),
-              child: Center(child: CircularProgressIndicator()),
-            ),
-            onEmpty: const Column(
-              children: [
-                SizedBox(height: 100),
-                Text('Nenhum papa entulho cadastrado'),
-                SizedBox(height: 100),
-              ],
+              onLoading: const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              onEmpty: const Column(
+                children: [
+                  SizedBox(height: 100),
+                  Text('Nenhum papa entulho cadastrado'),
+                  SizedBox(height: 100),
+                ],
+              ),
             ),
           ),
-          AppButtonPrimary(
-            onTap: () {
-              controller.clearForm();
-              Get.toNamed(Routes.PAPA_ENTULHO_FORM);
-            },
-            labelText: 'Cadastrar Papa Entulho',
-            margin: 32,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  AppButtonPrimary(
+                    onTap: () {
+                      controller.clearForm();
+                      Get.toNamed(Routes.PAPA_ENTULHO_FORM);
+                    },
+                    labelText: 'Cadastrar Papa Entulho',
+                    margin: 32,
+                  ),
+                ],
+              ),
+            ),
           ),
-          const SizedBox(height: 100),
         ],
       ),
     );

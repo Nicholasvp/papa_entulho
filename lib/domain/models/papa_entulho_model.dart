@@ -12,19 +12,29 @@ class PapaEntulhoModel {
   final DateTime dateInitial;
   final DateTime dateFinal;
   final int quantity;
-  final Status status;
 
   factory PapaEntulhoModel.fromJson(Map<String, dynamic> json) => _$PapaEntulhoModelFromJson(json);
 
-  PapaEntulhoModel(
-      {this.id,
-      required this.description,
-      required this.address,
-      required this.phone,
-      required this.dateInitial,
-      required this.dateFinal,
-      required this.quantity,
-      required this.status});
+  PapaEntulhoModel({
+    this.id,
+    required this.description,
+    required this.address,
+    required this.phone,
+    required this.dateInitial,
+    required this.dateFinal,
+    required this.quantity,
+  });
+
+  Status get status {
+    final now = DateTime.now();
+    if (now.isAfter(dateFinal)) {
+      return Status.atrasado;
+    } else if (now.isAfter(dateInitial) && now.isBefore(dateFinal)) {
+      return Status.alugado;
+    } else {
+      return Status.disponivel;
+    }
+  }
 
   Map<String, dynamic> toJson() => _$PapaEntulhoModelToJson(this);
 }

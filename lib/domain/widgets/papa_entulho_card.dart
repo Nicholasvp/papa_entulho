@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:papa_entulho/domain/enums/enums.dart';
 import 'package:papa_entulho/domain/models/papa_entulho_model.dart';
+import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
 
 class PapaEntulhoCard extends StatelessWidget {
   final PapaEntulhoModel papaEntulho;
@@ -30,6 +32,7 @@ class PapaEntulhoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final papaEntulhoController = Get.find<PapaEntulhoController>();
     return Stack(
       children: [
         Card(
@@ -44,8 +47,6 @@ class PapaEntulhoCard extends StatelessWidget {
                 const SizedBox(height: 24), // Espaço para o status flutuante
                 Row(
                   children: [
-                    const Icon(Icons.description, color: Colors.black54),
-                    const SizedBox(width: 8),
                     Expanded(
                       child: SelectableText(
                         papaEntulho.description,
@@ -135,19 +136,21 @@ class PapaEntulhoCard extends StatelessWidget {
           top: 8,
           right: 8,
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-            decoration: BoxDecoration(
-              color: _getStatusColor(),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: const [
-                BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(2, 2)),
-              ],
-            ),
-            child: Text(
-              papaEntulho.status.name.toUpperCase(),
-              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: _getStatusColor(),
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black26, blurRadius: 4, offset: Offset(2, 2)),
+                ],
+              ),
+              child: switch (papaEntulho.status) {
+                Status.disponivel =>
+                  Text(papaEntulhoController.daysForStart(papaEntulho.dateInitial), style: const TextStyle(color: Colors.white)),
+                Status.alugado => Text('ALUGADO: ${papaEntulhoController.daysRemaining(papaEntulho.dateFinal)}',
+                    style: const TextStyle(color: Colors.white)),
+                Status.atrasado => const Text('ATRASADO', style: TextStyle(color: Colors.white)),
+              }),
         ),
       ],
     );

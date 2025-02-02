@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papa_entulho/domain/routes/routes.dart';
 import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
 import 'package:papa_entulho/ui/auth/controller/login_controller.dart';
 

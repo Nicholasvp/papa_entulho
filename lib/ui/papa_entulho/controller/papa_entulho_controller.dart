@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:papa_entulho/domain/enums/enums.dart';
 import 'package:intl/intl.dart';
 import 'package:papa_entulho/domain/models/papa_entulho_model.dart';
 import 'package:papa_entulho/domain/repositories/papa_entulho_repository.dart';
@@ -33,7 +32,6 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
         dateInitial: DateFormat('dd/MM/yy').parse(dateInitialController.text),
         dateFinal: DateFormat('dd/MM/yy').parse(dateFinalController.text),
         quantity: int.parse(quantityController.text),
-        status: statusMap[statusController.text] ?? Status.disponivel,
       );
 
   void createPapaEntulho() async {
@@ -110,7 +108,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
 
   void fillForm() {
     final papaEntulhoModel = Get.arguments as PapaEntulhoModel;
-    descriptionController.text = papaEntulhoModel.description ?? '';
+    descriptionController.text = papaEntulhoModel.description;
     addressController.text = papaEntulhoModel.address;
     phoneController.text = papaEntulhoModel.phone;
     dateInitialController.text = papaEntulhoModel.dateInitial.toString().split(' ')[0];
@@ -125,5 +123,16 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
     dateInitialController.clear();
     dateFinalController.clear();
     quantityController.clear();
+  }
+
+  String daysRemaining(DateTime date) {
+    final difference = date.difference(DateTime.now());
+    return '${difference.inDays} DIAS RESTANTES';
+  }
+
+  String daysForStart(DateTime date) {
+    final today = DateTime.now();
+    final difference = date.difference(DateTime(today.year, today.month, today.day));
+    return '${difference.inDays} DIAS PARA INÍCIO';
   }
 }
