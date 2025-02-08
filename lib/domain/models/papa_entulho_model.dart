@@ -27,7 +27,9 @@ class PapaEntulhoModel {
 
   Status get status {
     final now = DateTime.now();
-    if (now.isAfter(dateFinal)) {
+    if (now.year == dateFinal.year && now.month == dateFinal.month && now.day == dateFinal.day) {
+      return Status.hoje;
+    } else if (now.isAfter(dateFinal)) {
       return Status.atrasado;
     } else if (now.isAfter(dateInitial) && now.isBefore(dateFinal)) {
       return Status.alugado;

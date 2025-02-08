@@ -90,6 +90,26 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
     }
   }
 
+  void searchPapaEntulho(String search) async {
+    if (search.isEmpty) {
+      getPapaEntulhos();
+      return;
+    }
+    change(null, status: RxStatus.loading());
+    try {
+      final response = await _papaEntulhoRepository.searchPapaEntulho(search: search, field: 'description');
+
+      if (response.isEmpty) {
+        change(null, status: RxStatus.empty());
+        return;
+      }
+
+      change(response, status: RxStatus.success());
+    } catch (e) {
+      change(null, status: RxStatus.error(e.toString()));
+    }
+  }
+
   Future<bool> confirmModal() async {
     bool result = false;
     await Get.defaultDialog(
@@ -111,8 +131,8 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
     descriptionController.text = papaEntulhoModel.description;
     addressController.text = papaEntulhoModel.address;
     phoneController.text = papaEntulhoModel.phone;
-    dateInitialController.text = papaEntulhoModel.dateInitial.toString().split(' ')[0];
-    dateFinalController.text = papaEntulhoModel.dateFinal.toString().split(' ')[0];
+    dateInitialController.text = DateFormat('dd/MM/yy').format(papaEntulhoModel.dateInitial);
+    dateFinalController.text = DateFormat('dd/MM/yy').format(papaEntulhoModel.dateFinal);
     quantityController.text = papaEntulhoModel.quantity.toString();
   }
 

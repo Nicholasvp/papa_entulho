@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:papa_entulho/domain/enums/enums.dart';
 import 'package:papa_entulho/domain/models/papa_entulho_model.dart';
+import 'package:papa_entulho/domain/utils/notifications_utils.dart';
 import 'package:papa_entulho/ui/papa_entulho/controller/papa_entulho_controller.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PapaEntulhoCard extends StatelessWidget {
   final PapaEntulhoModel papaEntulho;
@@ -21,8 +23,10 @@ class PapaEntulhoCard extends StatelessWidget {
     switch (papaEntulho.status) {
       case Status.disponivel:
         return Colors.green;
+      case Status.hoje:
+        return Colors.amber[900]!;
       case Status.alugado:
-        return Colors.blue;
+        return Colors.orange;
       case Status.atrasado:
         return Colors.red;
       default:
@@ -60,17 +64,11 @@ class PapaEntulhoCard extends StatelessWidget {
                   children: [
                     const Icon(Icons.location_on, color: Colors.grey),
                     const SizedBox(width: 8),
-                    Expanded(
-                      child: SelectableText(
-                        papaEntulho.address,
-                        style: const TextStyle(fontSize: 14, color: Colors.grey),
-                      ),
+                    SelectableText(
+                      papaEntulho.address,
+                      style: const TextStyle(fontSize: 14, color: Colors.grey),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
+                    const SizedBox(width: 16),
                     const Icon(Icons.phone, color: Colors.black),
                     const SizedBox(width: 8),
                     SelectableText(
@@ -82,17 +80,13 @@ class PapaEntulhoCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Icon(Icons.date_range, color: Colors.black),
+                    const Icon(Icons.event, color: Colors.black),
                     const SizedBox(width: 8),
                     Text(
                       'Início: ${DateFormat('dd/MM/yyyy').format(papaEntulho.dateInitial)}',
                       style: const TextStyle(fontSize: 14, color: Colors.black),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Row(
-                  children: [
+                    const SizedBox(width: 16),
                     const Icon(Icons.event, color: Colors.black),
                     const SizedBox(width: 8),
                     Text(
@@ -104,7 +98,7 @@ class PapaEntulhoCard extends StatelessWidget {
                 const SizedBox(height: 8),
                 Row(
                   children: [
-                    const Icon(Icons.confirmation_number, color: Colors.black),
+                    const Icon(Icons.fire_truck, color: Colors.black),
                     const SizedBox(width: 8),
                     Text(
                       'Quantidade: ${papaEntulho.quantity}',
@@ -117,8 +111,24 @@ class PapaEntulhoCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      icon: const Icon(Icons.edit, color: Colors.blue),
+                      icon: Icon(Icons.edit, color: Theme.of(context).primaryColor),
                       onPressed: onEdit,
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.notification_add, color: Colors.blue),
+                      onPressed: () {
+                        final eventUrl = Uri.parse('https://www.google.com/calendar/render?action=TEMPLATE'
+                            '&text=Cobrar+Papa+Entulho+-+${papaEntulho.description.replaceAll(' ', '+')}'
+                            '&dates=${DateFormat("yyyyMMdd").format(papaEntulho.dateFinal)}'
+                            '/${DateFormat("yyyyMMdd").format(papaEntulho.dateFinal)}'
+                            '&details=${papaEntulho.description}'
+                            '&location=${papaEntulho.address}');
+                        launchUrl(eventUrl).then((success) {
+                          if (!success) {
+                            showError('Erro ao abrir o Google Calendar');
+                          }
+                        });
+                      },
                     ),
                     IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
@@ -150,6 +160,7 @@ class PapaEntulhoCard extends StatelessWidget {
                 Status.alugado => Text('ALUGADO: ${papaEntulhoController.daysRemaining(papaEntulho.dateFinal)}',
                     style: const TextStyle(color: Colors.white)),
                 Status.atrasado => const Text('ATRASADO', style: TextStyle(color: Colors.white)),
+                Status.hoje => const Text('VENCE HOJE', style: TextStyle(color: Colors.white)),
               }),
         ),
       ],

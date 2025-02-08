@@ -11,6 +11,7 @@ class AppTextField extends StatelessWidget {
     this.numeric = false,
     this.icon,
     this.inputFormatters,
+    this.onChanged,
   });
 
   final String labelText;
@@ -20,12 +21,15 @@ class AppTextField extends StatelessWidget {
   final bool numeric;
   final IconData? icon;
   final List<TextInputFormatter>? inputFormatters;
+  final Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(fontSize: 16, color: Colors.white),
       decoration: InputDecoration(
         labelText: labelText,
+        hintStyle: TextStyle(color: Colors.grey[400]),
         border: const OutlineInputBorder(),
         prefixIcon: icon != null ? Icon(icon) : null,
       ),
@@ -35,6 +39,7 @@ class AppTextField extends StatelessWidget {
       ],
       validator: required ? (value) => value!.isEmpty ? 'Campo obrigatório' : null : validator,
       controller: controller,
+      onChanged: onChanged,
     );
   }
 }

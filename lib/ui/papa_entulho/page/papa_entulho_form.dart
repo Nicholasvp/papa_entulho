@@ -80,14 +80,15 @@ class _PapaEntulhoFormState extends State<PapaEntulhoForm> {
               GestureDetector(
                 onTap: () async {
                   DateTimeRange? pickedRange = await showDateRangePicker(
+                    saveText: 'Salvar',
                     context: context,
                     firstDate: DateTime(2000),
                     lastDate: DateTime(2101),
                     initialDateRange:
                         (controller.dateInitialController.text.isNotEmpty && controller.dateFinalController.text.isNotEmpty)
                             ? DateTimeRange(
-                                start: DateTime.parse(controller.dateInitialController.text),
-                                end: DateTime.parse(controller.dateFinalController.text),
+                                start: DateFormat('dd/MM/yy').parse(controller.dateInitialController.text),
+                                end: DateFormat('dd/MM/yy').parse(controller.dateFinalController.text),
                               )
                             : null,
                   );

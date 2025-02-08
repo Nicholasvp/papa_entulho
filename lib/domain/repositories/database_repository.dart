@@ -55,4 +55,17 @@ class DatabaseRepository {
       return;
     }
   }
+
+  Future<List<Map<String, dynamic>>> searchCollection({required String search, required String field}) async {
+    try {
+      final result = await fireStore
+          .collection(ref)
+          .where(field, isGreaterThanOrEqualTo: search)
+          .where(field, isLessThan: '${search}z')
+          .get();
+      return result.docs.map((e) => e.data()).toList();
+    } catch (e) {
+      return [];
+    }
+  }
 }

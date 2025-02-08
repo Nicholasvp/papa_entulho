@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
+import 'package:papa_entulho/domain/widgets/app_text_field.dart';
 import 'package:papa_entulho/ui/auth/controller/login_controller.dart';
 
 class LoginPage extends GetView<LoginController> {
@@ -19,22 +20,13 @@ class LoginPage extends GetView<LoginController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              TextField(
-                decoration: const InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
-                autofillHints: const [AutofillHints.email],
+              AppTextField(
+                labelText: 'Email',
                 controller: controller.emailController,
               ),
               const SizedBox(height: 16),
-              TextField(
-                obscureText: true,
-                decoration: const InputDecoration(
-                  labelText: 'Senha',
-                  border: OutlineInputBorder(),
-                ),
-                autofillHints: const [AutofillHints.password],
+              AppTextField(
+                labelText: 'Senha',
                 controller: controller.passwordController,
               ),
               const SizedBox(height: 16),
@@ -43,11 +35,15 @@ class LoginPage extends GetView<LoginController> {
                   onTap: controller.login,
                   labelText: 'Entrar',
                   expanded: true,
+                  backgroundColor: Colors.orange,
+                  margin: 0,
                 ),
                 onLoading: const AppButtonPrimary(
                   isLoading: true,
                   labelText: 'Entrar',
+                  backgroundColor: Colors.orange,
                   expanded: true,
+                  margin: 0,
                 ),
               ),
             ],
