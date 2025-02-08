@@ -9,6 +9,7 @@ part of 'papa_entulho_model.dart';
 PapaEntulhoModel _$PapaEntulhoModelFromJson(Map<String, dynamic> json) =>
     PapaEntulhoModel(
       id: json['id'] as String?,
+      userId: json['userId'] as String,
       description: json['description'] as String,
       address: json['address'] as String,
       phone: json['phone'] as String,
@@ -20,6 +21,7 @@ PapaEntulhoModel _$PapaEntulhoModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$PapaEntulhoModelToJson(PapaEntulhoModel instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'userId': instance.userId,
       'description': instance.description,
       'address': instance.address,
       'phone': instance.phone,

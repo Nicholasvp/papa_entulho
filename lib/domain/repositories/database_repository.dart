@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseRepository {
   final String ref = '';
@@ -24,7 +25,7 @@ class DatabaseRepository {
 
   Future<List<Map<String, dynamic>>> getCollection() async {
     try {
-      final result = await fireStore.collection(ref).get();
+      final result = await fireStore.collection(ref).where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
       return result.docs.map((e) => e.data()).toList();
     } catch (e) {
       return [];

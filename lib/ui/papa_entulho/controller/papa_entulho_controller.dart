@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -29,6 +30,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
         description: descriptionController.text,
         address: addressController.text,
         phone: phoneController.text,
+        userId: FirebaseAuth.instance.currentUser!.uid,
         dateInitial: DateFormat('dd/MM/yy').parse(dateInitialController.text),
         dateFinal: DateFormat('dd/MM/yy').parse(dateFinalController.text),
         quantity: int.parse(quantityController.text),

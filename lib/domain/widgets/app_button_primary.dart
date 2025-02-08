@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 
 class AppButtonPrimary extends StatelessWidget {
   const AppButtonPrimary({
@@ -28,6 +29,7 @@ class AppButtonPrimary extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: expanded ? double.infinity : null,
+        height: 50,
         padding: const EdgeInsets.all(16.0),
         margin: EdgeInsets.symmetric(horizontal: margin),
         decoration: BoxDecoration(
@@ -39,7 +41,10 @@ class AppButtonPrimary extends StatelessWidget {
         ),
         child: Center(
           child: isLoading
-              ? const CircularProgressIndicator.adaptive()
+              ? const LoadingIndicator(
+                  indicatorType: Indicator.ballBeat,
+                  colors: [Colors.white],
+                )
               : Text(
                   labelText,
                   style: TextStyle(

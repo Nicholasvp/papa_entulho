@@ -19,7 +19,7 @@ class AuthRepository extends DatabaseRepository {
       if (userCredential.user == null) {
         return null;
       }
-      await _getUser();
+      await getUser();
 
       return userCredential.user;
     } catch (e) {
@@ -44,7 +44,7 @@ class AuthRepository extends DatabaseRepository {
 
       final user = UserModel(id: userCredential.user!.uid, name: name, email: email, phone: phone);
       await createData(user.toJson(), uuid: user.id);
-      await _getUser();
+      await getUser();
 
       return userCredential.user!;
     } catch (e) {
@@ -52,7 +52,7 @@ class AuthRepository extends DatabaseRepository {
     }
   }
 
-  Future<void> _getUser() async {
+  Future<void> getUser() async {
     final user = _firebaseAuth.currentUser;
     if (user != null) {
       final data = await getData(collection: ref, id: user.uid);

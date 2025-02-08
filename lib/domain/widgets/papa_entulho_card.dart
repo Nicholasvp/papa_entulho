@@ -54,7 +54,7 @@ class PapaEntulhoCard extends StatelessWidget {
                     Expanded(
                       child: SelectableText(
                         papaEntulho.description,
-                        style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.black),
                       ),
                     ),
                   ],

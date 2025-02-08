@@ -4,6 +4,14 @@ class AppTheme {
   static final theme = ThemeData(
     primaryColor: Colors.black,
     scaffoldBackgroundColor: Colors.black,
+    textTheme: const TextTheme(
+      headlineLarge: TextStyle(color: Colors.white),
+      bodyLarge: TextStyle(color: Colors.white),
+      bodyMedium: TextStyle(color: Colors.white),
+      bodySmall: TextStyle(color: Colors.white),
+      labelLarge: TextStyle(color: Colors.white),
+      labelSmall: TextStyle(color: Colors.white),
+    ),
     datePickerTheme: DatePickerThemeData(
       backgroundColor: Colors.white,
       headerBackgroundColor: Colors.white,

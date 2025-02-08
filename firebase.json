@@ -1,1 +1,34 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"papa-entulho-26c99","appId":"1:400226249296:android:d14e10204f0ed01e833f55","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"papa-entulho-26c99","configurations":{"android":"1:400226249296:android:d14e10204f0ed01e833f55","ios":"1:400226249296:ios:a9ffee68a48a2f2c833f55","web":"1:400226249296:web:61a324c4170183c8833f55"}}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "papa-entulho-26c99",
+          "appId": "1:400226249296:android:d14e10204f0ed01e833f55",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "papa-entulho-26c99",
+          "configurations": {
+            "android": "1:400226249296:android:d14e10204f0ed01e833f55",
+            "ios": "1:400226249296:ios:a9ffee68a48a2f2c833f55",
+            "web": "1:400226249296:web:61a324c4170183c8833f55"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "source": ".",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "frameworksBackend": {
+      "region": "us-central1"
+    }
+  }
+}

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:papa_entulho/domain/routes/routes.dart';
 import 'package:papa_entulho/domain/widgets/app_button_primary.dart';
 import 'package:papa_entulho/domain/widgets/app_text_field.dart';
@@ -57,8 +58,12 @@ class PapaEntulhoPage extends GetView<PapaEntulhoController> {
                 },
               ),
               onLoading: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Center(child: CircularProgressIndicator()),
+                padding: EdgeInsets.all(100),
+                child: Center(
+                    child: LoadingIndicator(
+                  indicatorType: Indicator.ballTrianglePath,
+                  colors: [Colors.orange],
+                )),
               ),
               onEmpty: const Column(
                 children: [
