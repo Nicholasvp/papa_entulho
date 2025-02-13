@@ -19,7 +19,7 @@ class LoginPage extends GetView<LoginController> {
             children: [
               Image.asset(
                 'assets/images/logo.png',
-                width: Get.width * 0.5,
+                height: 200,
               ),
               AppTextField(
                 labelText: 'Email',

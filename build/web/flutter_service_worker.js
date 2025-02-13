@@ -24,7 +24,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "1cec29c6a0a66289aadbe7c0caf3f38e
 "canvaskit/skwasm.worker.js": "bfb704a6c714a75da9ef320991e88b03",
 "favicon.png": "7decef358e8cdff2161a0b93660ec3c0",
 "flutter.js": "383e55f7f3cce5be08fcf1f3881f585c",
-"flutter_bootstrap.js": "c4fe2fbe324f1896a40b68740e9ea028",
+"flutter_bootstrap.js": "c8d94e5cdb3815008daa3fd56204196e",
 "icons/android-chrome-192x192.png": "1b427fdcaf27417d81555a8035168ab7",
 "icons/android-chrome-512x512.png": "28f4ec8573abb738c7712e6ad3ef8f76",
 "icons/apple-touch-icon.png": "70f66ba67b5553455abddc0394934cac",
@@ -34,7 +34,7 @@ const RESOURCES = {"assets/AssetManifest.bin": "1cec29c6a0a66289aadbe7c0caf3f38e
 "icons/site.webmanifest": "053100cb84a50d2ae7f5492f7dd7f25e",
 "index.html": "a6ef8bc46314bcdceb6134af58ca7883",
 "/": "a6ef8bc46314bcdceb6134af58ca7883",
-"main.dart.js": "676220dc11fc8d3cdafc6821a1b11571",
+"main.dart.js": "6a51b0612167c610cd518dafdcbdcecf",
 "manifest.json": "684c73354d505cae3005fc67a0bc8f6c",
 "version.json": "6822b090ea60be28617cccaff7f53185"};
 // The application shell files that are downloaded before a service worker can
