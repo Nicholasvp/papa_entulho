@@ -61,6 +61,7 @@ class DatabaseRepository {
     try {
       final result = await fireStore
           .collection(ref)
+          .where('userId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
           .where(field, isGreaterThanOrEqualTo: search)
           .where(field, isLessThan: '${search}z')
           .get();

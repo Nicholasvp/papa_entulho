@@ -27,4 +27,14 @@ class PapaEntulhoRepository extends DatabaseRepository {
     final response = await searchCollection(search: search, field: field);
     return response.map((e) => PapaEntulhoModel.fromJson(e)).toList();
   }
+
+  //pegar a quantidade de papaentulhos alugados
+  Future<int> getQuantityPapaEntulhos() async {
+    final listPapaEntulhos = await getPapaEntulhos();
+    int totalQuantity = 0;
+    for (var papaEntulho in listPapaEntulhos) {
+      totalQuantity += papaEntulho.quantity;
+    }
+    return totalQuantity;
+  }
 }

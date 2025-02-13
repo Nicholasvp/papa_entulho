@@ -27,7 +27,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
 
   PapaEntulhoModel get papaEntulhoModelMounted => PapaEntulhoModel(
         id: Get.arguments?.id,
-        description: descriptionController.text,
+        description: descriptionController.text.toLowerCase(),
         address: addressController.text,
         phone: phoneController.text,
         userId: FirebaseAuth.instance.currentUser!.uid,
@@ -119,6 +119,7 @@ class PapaEntulhoController extends GetxController with StateMixin<List<PapaEntu
       middleText: 'Deseja realmente excluir este Papa Entulho?',
       textConfirm: 'Sim',
       textCancel: 'Não',
+      middleTextStyle: const TextStyle(fontSize: 16, color: Colors.black),
       onConfirm: () {
         result = true;
         Get.back();

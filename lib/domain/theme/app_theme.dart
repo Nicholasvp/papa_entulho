@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppTheme {
   static final theme = ThemeData(
     primaryColor: Colors.black,
-    scaffoldBackgroundColor: Colors.black,
+    scaffoldBackgroundColor: Colors.black87,
     textTheme: const TextTheme(
       headlineLarge: TextStyle(color: Colors.white),
       bodyLarge: TextStyle(color: Colors.white),
@@ -13,10 +13,19 @@ class AppTheme {
       labelSmall: TextStyle(color: Colors.white),
     ),
     datePickerTheme: DatePickerThemeData(
-      backgroundColor: Colors.white,
-      headerBackgroundColor: Colors.white,
+      backgroundColor: Colors.black,
+      headerBackgroundColor: Colors.black,
       dayBackgroundColor: WidgetStateProperty.all(Colors.orange),
       rangePickerBackgroundColor: Colors.orange[100],
+      dayStyle: const TextStyle(color: Colors.black),
+      rangePickerHeaderHeadlineStyle: const TextStyle(color: Colors.black),
+      rangePickerHeaderHelpStyle: const TextStyle(color: Colors.black),
+      inputDecorationTheme: const InputDecorationTheme(
+        labelStyle: TextStyle(color: Colors.black),
+        floatingLabelStyle: TextStyle(color: Colors.black),
+        helperStyle: TextStyle(color: Colors.red),
+        fillColor: Colors.red,
+      ),
     ),
     iconButtonTheme: IconButtonThemeData(
       style: ButtonStyle(

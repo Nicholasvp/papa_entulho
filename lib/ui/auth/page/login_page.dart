@@ -10,9 +10,6 @@ class LoginPage extends GetView<LoginController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(''),
-      ),
       body: Center(
         child: Container(
           width: (Get.width * 0.5) + 100,
@@ -20,6 +17,10 @@ class LoginPage extends GetView<LoginController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Image.asset(
+                'assets/images/logo.png',
+                width: Get.width * 0.5,
+              ),
               AppTextField(
                 labelText: 'Email',
                 controller: controller.emailController,
